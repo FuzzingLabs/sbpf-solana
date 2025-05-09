@@ -156,6 +156,8 @@ pub struct Analysis<'a> {
     pub dfg_forward_edges: BTreeMap<DfgNode, BTreeSet<DfgEdge>>,
     /// Data flow edges (the keys are DfgEdge destinations)
     pub dfg_reverse_edges: BTreeMap<DfgNode, BTreeSet<DfgEdge>>,
+    /// SBPFVersion
+    pub sbpf_version: SBPFVersion,
 }
 
 impl<'a> Analysis<'a> {
@@ -204,6 +206,7 @@ impl<'a> Analysis<'a> {
             super_root: insn_ptr,
             dfg_forward_edges: BTreeMap::new(),
             dfg_reverse_edges: BTreeMap::new(),
+            sbpf_version: executable.get_sbpf_version(),
         };
         result.split_into_basic_blocks(false, executable.get_sbpf_version());
         result.control_flow_graph_tarjan();
